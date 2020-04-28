@@ -10,6 +10,7 @@ class App extends Component {
     minutes = 0;
     hours = 0;
     y = 0;
+    iscountDownActive = false ;
 
   render() {
     return (
@@ -51,17 +52,22 @@ class App extends Component {
     console.log("convert is executed");
   }
   countDown=()=>{
-    this.y = setInterval(()=>{ if (this.state.x >0) {this.state.x = this.state.x - 1; this.convert(this.state.x) ;this.setState({x : this.state.x }) ;console.log("x : ",this.state.x);
+    if ((this.iscountDownActive == false ) &&  (this.state.x > 0)){
+    this.y = setInterval(()=>{ if (this.state.x >0) {this.iscountDownActive = true ; this.state.x = this.state.x - 1; this.convert(this.state.x) ;this.setState({x : this.state.x }) ;console.log("x : ",this.state.x);
     }else{this.stop()}}, 1000) ;
     console.log("countDown is executed");
   }
+  }
+
   stop=()=>{
     clearInterval(this.y);
     console.log("stop is executed");
+    this.iscountDownActive = false;
   }
   reset=()=>{
+    this.stop();
     this.seconds=0; this.minutes=0; this.hours = 0 ; this.setState({x : 0 });
-    clearInterval(this.y);
+    this.y = 0;
     console.log("reset is executed");
   }
   
